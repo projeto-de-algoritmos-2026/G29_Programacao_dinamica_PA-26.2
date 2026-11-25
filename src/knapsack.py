@@ -30,17 +30,42 @@ def montar_tabela(itens: list[Item], capacidade: int) -> list[list[int]]:
 
     return tabela
 
+def reconstruir_solucao(
+    itens: list[Item],
+    tabela: list[list[int]],
+    capacidade: int,
+) -> tuple[list[Item], list[tuple[int, int]]]:
+    escolhidos = []
+    caminho = []
+    c = capacidade
+
+    # sobe da resposta (n, capacidade) ate a linha 0
+    for i in range(len(itens), 0, -1):
+        caminho.append((i, c))
+
+        # se o valor mudou em relacao a linha de cima, o item i entrou.
+        # no empate ele fica de fora, entao a solucao mostrada e sempre a mesma
+        if tabela[i][c] != tabela[i - 1][c]:
+            escolhidos.append(itens[i - 1])
+            c -= itens[i - 1].peso
+
+    caminho.append((0, c))
+
+    # a busca anda de tras para frente; devolve os itens na ordem do CSV
+    escolhidos.reverse()
+    return escolhidos, caminho
+
 def resolver_mochila(itens: list[Item], capacidade: int) -> ResultadoMochila:
     if capacidade < 0:
         raise ValueError("A capacidade não pode ser negativa")
 
     tabela = montar_tabela(itens, capacidade)
+    escolhidos, caminho = reconstruir_solucao(itens, tabela, capacidade)
 
-    # a reconstrucao dos itens escolhidos ainda nao foi feita
     return ResultadoMochila(
-        escolhidos=[],
-        peso_total=0,
+        escolhidos=escolhidos,
+        peso_total=sum(item.peso for item in escolhidos),
         valor_total=tabela[len(itens)][capacidade],
         tabela=tabela,
-        caminho=[],
+        caminho=caminho,
     )
