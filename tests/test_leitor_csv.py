@@ -1,7 +1,28 @@
+from pathlib import Path
+
 import pytest
 
 from src.item import Item
 from src.leitor_csv import ErroValidacaoCSV, ler_itens_csv
+
+@pytest.mark.parametrize(
+    ("nome_arquivo", "quantidade_esperada"),
+    [
+        ("bagagem_de_mao.csv", 10),
+        ("guloso_falha.csv", 3),
+        ("bagagem_despachada.csv", 15),
+    ],
+)
+def test_le_csvs_de_exemplo_validos(
+    nome_arquivo: str,
+    quantidade_esperada: int,
+) -> None:
+    caminho = Path(__file__).resolve().parents[1] / "exemplos" / nome_arquivo
+
+    itens = ler_itens_csv(caminho)
+
+    assert len(itens) == quantidade_esperada
+    assert len({item.id for item in itens}) == quantidade_esperada
 
 def test_le_csv_valido_e_remove_espacos_e_bom(tmp_path) -> None:
     caminho = tmp_path / "itens.csv"
@@ -73,7 +94,6 @@ def test_ignora_linhas_em_branco(tmp_path) -> None:
         "id,nome,peso,valor\n\n1,Câmera,1,6\n",
         encoding="utf-8",
     )
-    assert ler_itens_csv(caminho) == [Item(id=1, nome="Câmera", peso=1, valor=6)]
     assert ler_itens_csv(caminho) == [Item(id=1, nome="Câmera", peso=1, valor=6)]
 
 def test_csv_com_cabecalho_e_sem_itens_e_valido(tmp_path) -> None:
