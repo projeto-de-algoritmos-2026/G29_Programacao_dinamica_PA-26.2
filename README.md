@@ -15,7 +15,7 @@ Trabalho 4 da disciplina de Projeto de Algoritmos do 2º semestre de 2026. O sis
 
 Cada item possui um peso e um valor de importância. O item é levado inteiro ou fica de fora, e cada item pode ser escolhido no máximo uma vez. O objetivo é encontrar a combinação de itens com a maior importância total que caiba na capacidade da bagagem.
 
-Uma estratégia gulosa que prioriza os itens com maior importância por kg pode não encontrar a melhor combinação. Por isso, o projeto resolve o problema Knapsack 0/1 com programação dinâmica.
+Uma estratégia ambiciosa que prioriza os itens com maior importância por kg pode não encontrar a melhor combinação. Por isso, o projeto resolve o problema Knapsack 0/1 com programação dinâmica.
 
 ### Solução
 
@@ -23,12 +23,12 @@ A interface permite abrir um arquivo CSV com os itens e informar a capacidade da
 
 Ao resolver o problema, o sistema apresenta:
 
-- Os itens escolhidos pela programação dinâmica e pela estratégia gulosa;
+- Os itens escolhidos pela programação dinâmica e pela estratégia ambiciosa;
 - O peso e a importância total de cada solução;
 - O tempo de execução;
 - A tabela da programação dinâmica, com o caminho da reconstrução destacado.
 
-O exemplo `exemplos/guloso_falha.csv`, com capacidade de 5 kg, demonstra um caso em que o guloso perde: a programação dinâmica escolhe Notebook e Roupas, com importância 22 e peso 5 kg; o guloso escolhe Câmera e Notebook, com importância 16 e deixa 2 kg livres.
+O exemplo `exemplos/guloso_falha.csv`, com capacidade de 5 kg, mostra uma limitação da estratégia ambiciosa. A programação dinâmica escolhe Notebook e Roupas, com importância 22 e peso 5 kg. A estratégia ambiciosa escolhe Câmera e Notebook, com importância 16 e 2 kg livres.
 
 ### Algoritmo
 
@@ -71,13 +71,12 @@ O preenchimento da tabela de programação dinâmica processa `n` itens para cad
 | Preencher a tabela da programação dinâmica | `O(nW)` |
 | Reconstruir a solução | `O(n)` |
 | Desenhar a tabela | `O(nW)` |
-| Executar a estratégia gulosa | `O(n log n)` |
+| Executar a estratégia ambiciosa | `O(n log n)` |
 | **Complexidade da programação dinâmica** | **`O(nW)`** |
 
 O espaço da tabela é `O(nW)`. A complexidade é pseudo-polinomial porque depende do valor numérico da capacidade `W`, e não apenas do tamanho em bits da entrada. O limite de 50 kg da interface mantém a tabela em um tamanho prático.
 
 ## Screenshots
-
 
 ### Cenário 1: Bagagem de mão
 
@@ -85,12 +84,12 @@ O espaço da tabela é `O(nW)`. A complexidade é pseudo-polinomial porque depen
 - **Capacidade:** 10 kg;
 - **Resultado da programação dinâmica:** importância 57, peso 10 kg.
 
-### Cenário 2: Falha do guloso
+### Cenário 2: Falha da estratégia ambiciosa
 
 - **Arquivo:** `exemplos/guloso_falha.csv`;
 - **Capacidade:** 5 kg;
 - **Programação dinâmica:** importância 22, com Notebook e Roupas;
-- **Guloso:** importância 16, com Câmera e Notebook.
+- **Ambicioso:** importância 16, com Câmera e Notebook.
 
 ### Cenário 3: Bagagem despachada
 
