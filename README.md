@@ -84,6 +84,8 @@ O espaço da tabela é `O(nW)`. A complexidade é pseudo-polinomial porque depen
 - **Capacidade:** 10 kg;
 - **Resultado da programação dinâmica:** importância 57, peso 10 kg.
 
+![Bagagem de mão com capacidade de 10 kg](./assets/exemplo-bagagem-de-mao.png)
+
 ### Cenário 2: Falha da estratégia ambiciosa
 
 - **Arquivo:** `exemplos/guloso_falha.csv`;
@@ -91,11 +93,15 @@ O espaço da tabela é `O(nW)`. A complexidade é pseudo-polinomial porque depen
 - **Programação dinâmica:** importância 22, com Notebook e Roupas;
 - **Ambicioso:** importância 16, com Câmera e Notebook.
 
+![Comparação entre programação dinâmica e estratégia ambiciosa com capacidade de 5 kg](./assets/exemplo-ambicioso.png)
+
 ### Cenário 3: Bagagem despachada
 
 - **Arquivo:** `exemplos/bagagem_despachada.csv`;
 - **Capacidade:** 23 kg;
 - **Resultado da programação dinâmica:** importância 101, peso 23 kg.
+
+![Bagagem despachada com capacidade de 23 kg](./assets/exemplo-bagagem-despachada.png)
 
 ## Vídeo
 
